@@ -22,8 +22,9 @@ public class Client {
 
     private void startConnection(ClientModel clientModel) throws IOException {
         clientSocket = new Socket(InetAddress.getByName(clientModel.getIpAdress()),clientModel.getPortUsed());
-        BufferedReader Buffin = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter Pout = new PrintWriter(clientSocket.getOutputStream(), true);
+       // BufferedReader Buffin = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+       // PrintWriter Pout = new PrintWriter(clientSocket.getOutputStream(), true);
+        System.out.println("Client connected");
     }
 
 

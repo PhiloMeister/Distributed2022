@@ -12,7 +12,7 @@ public class ClientModel {
     private String mailAdress;
     private String IpAdress;
     private int portUsed;
-    //No registered client
+
 
     //registered client
     public ClientModel(String username, String password, String ipAdress, int portUsed) throws IOException {
@@ -21,6 +21,11 @@ public class ClientModel {
         this.IpAdress = ipAdress;
         this.portUsed = portUsed;
         //Method used for running a connection
+    }
+    //used when trying to login
+    public ClientModel(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public int getPortUsed() {
