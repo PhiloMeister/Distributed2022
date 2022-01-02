@@ -19,8 +19,39 @@ public class Client {
     public Client(ClientModel clientModel) throws IOException {
         this.clientModel = clientModel;
 
-        startConnection();
-        clientlogincheck();
+
+        loginOrRegister();
+
+    }
+
+    private void loginOrRegister() throws IOException {
+        int response = 0;
+
+        while(response!=1 || response!=2) {
+            System.out.println(" (1) Login, (2) register");
+            response = scannerIn.nextInt();
+            switch (response) {
+                case 1:
+                    startConnection();
+                    clientlogincheck();
+                    break;
+                case 2:
+                    clientRegister();
+                    startConnection();
+                    clientlogincheck();
+                    break;
+
+            }
+        }
+    }
+
+    private void clientRegister() {
+        String usernameRegister;
+        String passwordRegister;
+        System.out.println("CREATE A ACCOUNT");
+        System.out.println("//NEW USERNAME//");
+
+        System.out.println("//NEW USERNAME//");
     }
 
     private void clientlogincheck() throws IOException {
@@ -40,7 +71,7 @@ public class Client {
             pout.println(password);
             pout.flush();
             isAuthentified = buffin.readLine();
-            if (isAuthentified.equals(false)){
+            if (isAuthentified.equals("false")){
                 System.out.println("! WRONG PASSWORD OR LOGIN !");
                 System.out.println();
             }

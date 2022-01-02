@@ -30,7 +30,14 @@ public class Server {
         //CREATION OF SERVER
         //AND WAITING FOR A CLIENT..
         createServer();
+        //check if the login given by client is good, if yes it let enter
+        loginOrRegister();
         loginCheck();
+
+
+    }
+
+    private void loginOrRegister() {
 
 
     }
@@ -55,26 +62,23 @@ public class Server {
             //getting password
             password = buffin.readLine();
             System.out.println("password :" + password);
+            scannerIn.close();
             //creating a object with both inputs given
             clientTest = new ClientModel(username, password);
 
             //checking if there is username & password matches
             for (ClientModel client : listOfClientsUtils.getListOfCLients()) {
-                System.out.println("loop");
                 if (client.getUsername().equals(clientTest.getUsername() )) {
                     if (client.getPassword().equals(clientTest.getPassword())){
+                        // terminate the while() loop server side
                         isAuthentified = true;
-                        System.out.println("good");
+                        // terminate the while() loop in the client side
                         pout.println("true");
                     }
 
                 }
             }
-                // if not print this
-            if (isAuthentified ==false){
-                System.out.println("! WRONG PASSWORD OR LOGIN !");
-                System.out.println();
-            }
+            pout.println("false");
 
         }
         //if login is success
