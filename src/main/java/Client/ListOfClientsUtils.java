@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class ListOfClients {
+public class ListOfClientsUtils {
 
 
    private CopyOnWriteArrayList <ClientModel> listOfCLients = new CopyOnWriteArrayList<ClientModel>();
 
-    public ListOfClients() throws IOException {
+    public ListOfClientsUtils() throws IOException {
         ClientModel client1 = new ClientModel("PhiloMeister","IsYourMomFree","0.0.0.0",1234);
-        ClientModel client2 = new ClientModel("Nicolas","Nicolas","0.0.0.0",1234);
+        ClientModel client2 = new ClientModel("Nicolas","Nicolas");
         ClientModel client3 = new ClientModel("JesseLivermore","JesseLivermore","0.0.0.0",1234);
         ClientModel client4 = new ClientModel("MorganHousel","MorganHousel","0.0.0.0",1234);
         listOfCLients.add(client1);
