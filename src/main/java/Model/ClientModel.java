@@ -3,6 +3,7 @@ package Model;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClientModel {
     private Socket clientSocket = null;
@@ -14,12 +15,14 @@ public class ClientModel {
     private int portUsed;
 
 
+
     //registered client
     public ClientModel(String username, String password, String ipAdress, int portUsed) throws IOException {
         this.username = username;
         this.password = password;
         this.IpAdress = ipAdress;
         this.portUsed = portUsed;
+
         //Method used for running a connection
     }
     //used when trying to login
