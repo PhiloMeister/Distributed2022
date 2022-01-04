@@ -1,12 +1,12 @@
 package Model;
 
-import java.awt.*;
-import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.concurrent.CopyOnWriteArrayList;
+import Client.ListOfMusicUtils;
 
-public class ClientModel {
+import java.io.*;
+import java.net.Socket;
+import java.util.List;
+
+public class ClientModel implements Serializable {
     private Socket clientSocket = null;
     private ClientModel clientModel;
     private String username;
@@ -14,9 +14,10 @@ public class ClientModel {
     private String mailAdress;
     private String IpAdress;
     private int portUsed;
+    ListOfMusicUtils listOfMusicUtils;
 
     //registered client
-    public ClientModel(String username, String password, String ipAdress, int portUsed) throws IOException {
+    public ClientModel(String username,String ipAdress, int portUsed) throws IOException {
         this.username = username;
         this.password = password;
         this.IpAdress = ipAdress;
@@ -28,6 +29,14 @@ public class ClientModel {
     public ClientModel(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public List<SongModel> getListOfMusicUtils() {
+        return listOfMusicUtils.getListOfMusics();
+    }
+
+    public void setListOfMusicUtils(ListOfMusicUtils listOfMusicUtils) {
+        this.listOfMusicUtils = listOfMusicUtils;
     }
 
     public int getPortUsed() {

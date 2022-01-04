@@ -24,6 +24,9 @@ public class Server {
     private ClientModel clientModel;
     private String ipadress;
     private int portUsed;
+    private String response = "STAND-BY";
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
 
     public Server(String ipadress, int portUsed) throws IOException, ClassNotFoundException, InterruptedException {
         this.ipadress = ipadress;
@@ -31,90 +34,57 @@ public class Server {
 
         //CREATION OF SERVER
         //AND WAITING FOR A CLIENT..
+
         createServer();
-        register()
-        //check if the login given by client is good, if yes it let enter
-        //loginOrRegister();
-
-
+        receiveClient();
+        waitForChoice();
+        
     }
 
-    private void register() {
-    }
-
-    private void loginOrRegister() throws IOException, ClassNotFoundException, InterruptedException {
-        int response = 0;
-
-        while (response != 1 || response != 2) {
-            pout.println(" Choose : (1) Login / (2) Register");
-
-            response = Integer.parseInt(buffin.readLine());
-            System.out.println("response : " + response);
+    private void waitForChoice() throws IOException {
+        System.out.println("response"+response);
+        while (!response.equalsIgnoreCase("END")) {
             switch (response) {
-                case 1:
-                    System.out.println("here");
-                    loginCheck();
+                case "LIST ALL":
+                    System.out.println("LIST ALL SECTION");
+                    listAll();
+                    response = buffin.readLine();
                     break;
-                case 2:
-                    System.out.println("here2");
+                case "LIST MUSICS":
+                    System.out.println("list section");
+                    //TODO A redefinir car list all fait deja ceci
+                    response = buffin.readLine();
+                    break;
+                case "HELP":
+                    System.out.println("HELP SECTION");
+                    response = buffin.readLine();
+                    break;
+                case "FIND":
+                    System.out.println("FIND SECTION");
+                    response = buffin.readLine();
+                    break;
+                default:
+                    System.out.println("DEFAULT");
+                    response = buffin.readLine();
                     break;
             }
-        }
-    }
-
-    private void loginCheck() throws IOException, ClassNotFoundException, InterruptedException {
-        // get the input stream from the connected socket
-        boolean isAuthentified = false;
-        String username;
-        String password;
-
-        System.out.println("loginCheck");
-
-        while (isAuthentified != true) {
-
-            //getting username
-            pout.println("//USERNAME// : ");
-
-            username = buffin.readLine();
-            System.out.println("username :" + username);
-
-            pout.println("//PASSWORD// : ");
-
-            password = buffin.readLine();
-
-            System.out.println("password :" + password);
-            //getting password
-
-
-            //creating a object with both inputs given
-            clientTest = new ClientModel(username, password);
-
-            //checking if there is username & password matches
-            for (ClientModel client : listOfClientsUtils.getListOfCLients()) {
-                if (client.getUsername().equals(clientTest.getUsername())) {
-                    if (client.getPassword().equals(clientTest.getPassword())) {
-                        // terminate the while() loop server side
-                        isAuthentified = true;
-                        // terminate the while() loop in the client side
-                        pout.println("true");
-                        pout.flush();
-                    }
-
-                }
-            }
-            pout.println("false");
-            pout.flush();
 
         }
-        //if login is success
-        pout.println("//SUCCESSFUL LOGIN//");
-        pout.flush();
-        System.out.println("[SERVER] : client connected");
-        System.out.println("Client infos :");
-        System.out.println("username :" + clientTest.getUsername());
-        System.out.println();
 
     }
+
+    private void listAll() throws IOException {
+     objectOutputStream.writeObject(listOfClientsUtils);
+     objectOutputStream.flush();
+        System.out.println("[SERVER] : list sent");
+    }
+
+    private void receiveClient() throws IOException, ClassNotFoundException {
+        clientModel = (ClientModel) objectInputStream.readObject();
+        System.out.println("client :"+ clientModel.getUsername()+" joined");
+        listOfClientsUtils.add(clientModel);
+    }
+
 
     private void createServer() throws IOException, InterruptedException {
         mySkServer = new ServerSocket(portUsed, 10, InetAddress.getByName(ipadress));
@@ -124,11 +94,16 @@ public class Server {
         System.out.println("Listening to Port : " + mySkServer.getLocalPort());
         System.out.println("waiting..");
         srvSocket = mySkServer.accept();
-        buffin = new BufferedReader(new InputStreamReader(srvSocket.getInputStream()));
         pout = new PrintWriter(srvSocket.getOutputStream(), true);
+        buffin = new BufferedReader(new InputStreamReader(srvSocket.getInputStream()));
+
+        //Object transfering
+        objectOutputStream = new ObjectOutputStream(srvSocket.getOutputStream());
+        objectInputStream = new ObjectInputStream(srvSocket.getInputStream());
 
 
     }
+
 
 
 }
