@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -13,8 +14,6 @@ public class ClientModel {
     private String mailAdress;
     private String IpAdress;
     private int portUsed;
-
-
 
     //registered client
     public ClientModel(String username, String password, String ipAdress, int portUsed) throws IOException {

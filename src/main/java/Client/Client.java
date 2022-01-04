@@ -22,7 +22,7 @@ public class Client {
 
     }
 
-    private void loginOrRegister() throws IOException {
+   /* private void loginOrRegister() throws IOException {
         int response = 0;
 
         while (response != 1 || response != 2) {
@@ -33,7 +33,6 @@ public class Client {
             pout.flush();
             switch (response) {
                 case 1:
-
                     clientlogincheck();
                     break;
                 case 2:
@@ -42,7 +41,7 @@ public class Client {
                     break;
             }
         }
-    }
+    }*/
 
     private void clientRegister() {
         String usernameRegister;

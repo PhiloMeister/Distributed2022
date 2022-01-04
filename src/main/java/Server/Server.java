@@ -32,10 +32,14 @@ public class Server {
         //CREATION OF SERVER
         //AND WAITING FOR A CLIENT..
         createServer();
+        register()
         //check if the login given by client is good, if yes it let enter
         //loginOrRegister();
 
 
+    }
+
+    private void register() {
     }
 
     private void loginOrRegister() throws IOException, ClassNotFoundException, InterruptedException {
